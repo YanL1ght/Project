@@ -3,13 +3,13 @@ from Bullet import Bullet
 # import Entity
 
 
-class Player:
-    def __init__(self, x=500, y=500):
+class Player:  # класс Игрока
+    def __init__(self, x=500, y=500):  # инициализация класса
         self.pos_x = x
         self.pos_y = y
         self.width = 50
         self.height = 100
-        
+
         self.body = None
         self.isJump = False
         self.jumpCount = 20
@@ -17,7 +17,7 @@ class Player:
         self.facing = 1
         self.speed = 1
 
-    def render(self):
+    def render(self):  # отрисовка персонажа и пуль
         pg.draw.rect(sc, pg.Color('white'), (self.pos_x, self.pos_y, self.width, self.height))
 
         for bullet in self.bullets:
@@ -27,7 +27,7 @@ class Player:
             else:
                 self.bullets.pop(self.bullets.index(bullet))
 
-    def move(self, x=10):
+    def move(self, x=10):  # движение персонажа
         keys = pg.key.get_pressed()
         if keys[pg.K_a]:
             self.pos_x -= x * self.speed
@@ -36,7 +36,7 @@ class Player:
             self.pos_x += x * self.speed
             self.facing = 1
 
-    def jump(self):
+    def jump(self):  # прыжок персонажа
         if self.isJump:
             if self.jumpCount >= -20:
                 neg = 1
@@ -48,14 +48,14 @@ class Player:
                 self.isJump = False
                 self.jumpCount = 20
 
-    def shot(self):
+    def shot(self):  # выстрел персонажа
         self.bullets.append(Bullet(self.pos_x, self.pos_y + (self.height // 2), 10, (255, 0, 0), self.facing))
 
-    def lunge(self, x=300):
+    def lunge(self, x=300):  # одна из механик игры, выпад
         self.pos_x += x * self.facing
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # демонстрация работы класса
     pg.init()
     win_size = (1000, 900)
     sc = pg.display.set_mode(win_size)
